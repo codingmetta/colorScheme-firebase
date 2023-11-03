@@ -1,18 +1,17 @@
-import './App.css'
-import { useState, useEffect } from 'react';
-import HeaderTools from './components/HeaderTools.jsx'
-import MainScheme from './components/MainScheme.jsx'
-import FooterHex from './components/FooterHex.jsx'
+import "./main.css";
+import { useState, useEffect } from "react";
+import HeaderTools from "./components/HeaderTools.jsx";
+import MainScheme from "./components/MainScheme.jsx";
+import FooterHex from "./components/FooterHex.jsx";
 
 function App() {
-
-  const [mode, setMode] = useState('monochrome');
+  const [mode, setMode] = useState("monochrome");
   const [scheme, setScheme] = useState({
-    first: '#F55A5A',
-    second: '#FFFFFF',
-    third: '#FFFFFF',
-    fourth: '#FFFFFF',
-    fifth: '#FFFFFF'
+    first: "#F55A5A",
+    second: "#FFFFFF",
+    third: "#FFFFFF",
+    fourth: "#FFFFFF",
+    fifth: "#FFFFFF",
   });
 
   useEffect(() => {
@@ -22,25 +21,25 @@ function App() {
     fetch(fetchString)
       .then((res) => res.json())
       .then((data) =>
-        setScheme(prevScheme => {
+        setScheme((prevScheme) => {
           return {
             ...prevScheme,
             second: data.colors[0].hex.value,
             third: data.colors[1].hex.value,
             fourth: data.colors[2].hex.value,
             fifth: data.colors[3].hex.value,
-          }
-
-        }));
-  }, [mode, scheme])
+          };
+        })
+      );
+  }, [mode, scheme]);
 
   function handleChange(value) {
     setScheme({
       ...scheme,
-      first: value.toUpperCase()
+      first: value.toUpperCase(),
     });
   }
-  
+
   function handleMode(mode) {
     let res;
     switch (mode) {
@@ -68,21 +67,21 @@ function App() {
       default:
         res = "";
     }
-    setMode(res)
+    setMode(res);
   }
 
   return (
-    <div className="app">
-      <HeaderTools 
-        colorScheme={scheme} 
-        handleChange={handleChange} 
-        currentMode={mode} 
+    <div className="flex flex-col justify-center h-64 text-white w-72 ">
+      <HeaderTools
+        colorScheme={scheme}
+        handleChange={handleChange}
+        currentMode={mode}
         handleMode={handleMode}
       />
       <MainScheme colorScheme={scheme} />
       <FooterHex hexScheme={scheme} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
